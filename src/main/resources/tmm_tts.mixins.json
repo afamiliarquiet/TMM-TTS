@@ -10,7 +10,6 @@
   "client": [
     "client.ChatScreenMixin",
     "client.KeyBindingMixinMixin",
-    "client.TMMConfigMixin",
     "client.VoicechatMixin"
   ],
   "injectors": {
