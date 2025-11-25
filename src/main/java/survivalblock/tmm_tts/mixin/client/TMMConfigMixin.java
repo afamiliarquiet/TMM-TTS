@@ -6,6 +6,7 @@ import com.llamalad7.mixinextras.sugar.Cancellable;
 import dev.doctor4t.trainmurdermystery.TMMConfig;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.option.GameOptions;
 import org.objectweb.asm.Opcodes;
@@ -19,6 +20,10 @@ public class TMMConfigMixin {
 
     @WrapOperation(method = "writeChanges", at = @At(value = "FIELD", target = "Lnet/minecraft/client/MinecraftClient;options:Lnet/minecraft/client/option/GameOptions;", opcode = Opcodes.GETFIELD))
     private GameOptions nullableOptions(MinecraftClient instance, Operation<GameOptions> original, @Cancellable CallbackInfo ci) {
+        if (!FabricLoader.getInstance().isDevelopmentEnvironment()) {
+            return original.call(instance);
+        }
+
         GameOptions options = original.call(instance);
         if (options == null) {
             ci.cancel();
