@@ -9,6 +9,8 @@
   ],
   "client": [
     "client.ChatScreenMixin",
+    "client.EspeakPositionInvoker",
+    "client.EspeakSpeakerMixin",
     "client.KeyBindingMixinMixin",
     "client.VoicechatMixin"
   ],
