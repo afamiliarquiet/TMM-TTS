@@ -22,8 +22,8 @@ import org.slf4j.LoggerFactory;
 public class TMMTTSClient implements ClientModInitializer, ClientCommandRegistrationCallback {
 	public static final String MOD_ID = "tmm_tts";
 	public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
+    public static final TMMTTSConfig CONFIG = TMMTTSConfig.createToml(FabricLoader.getInstance().getConfigDir(), "", MOD_ID, TMMTTSConfig.class);
 
-    public static boolean autospeak = false;
     public static boolean initializingAgain = false;
 
 	@Override
@@ -47,12 +47,12 @@ public class TMMTTSClient implements ClientModInitializer, ClientCommandRegistra
                 .then(
                         booleanArgument("maybespeak")
                                 .executes(context -> {
-                                    autospeak = context.getArgument("maybespeak", Boolean.class);
-                                    context.getSource().sendFeedback(Text.stringifiedTranslatable("commands.tmm_tts.autospeak.set", autospeak));
+                                    TMMTTSClient.CONFIG.autospeak = context.getArgument("maybespeak", Boolean.class);
+                                    context.getSource().sendFeedback(Text.stringifiedTranslatable("commands.tmm_tts.autospeak.set", TMMTTSClient.CONFIG.autospeak));
                                     return 1;
                                 })
                 ).executes(context -> {
-                    context.getSource().sendFeedback(Text.stringifiedTranslatable("commands.tmm_tts.autospeak.get", autospeak));
+                    context.getSource().sendFeedback(Text.stringifiedTranslatable("commands.tmm_tts.autospeak.get", TMMTTSClient.CONFIG.autospeak));
                     return 1;
                 }).build();
 
